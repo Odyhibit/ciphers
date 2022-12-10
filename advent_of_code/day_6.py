@@ -9,7 +9,7 @@ def test(word: str, match: int):
 
 
 marker_length = 14  # change this to 4 to get answer for part 1
-with open("day_6.txt", "r") as streams:
+with open("input/day_6.txt", "r") as streams:
     for stream in streams:
         str_part = stream[0:marker_length]
         for i in range(marker_length, len(stream) + 1):

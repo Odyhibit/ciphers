@@ -1,9 +1,13 @@
+from collections import defaultdict
+
+
 def get_dirs(dir_path: str) -> []:
     output = [dir_path]
     while len(dir_path) > 3 or dir_path == "/":
         end = dir_path.rfind("/")
         dir_path = dir_path[:end]
         output.append(dir_path)
+    # print(output)
     return output
 
 
@@ -16,7 +20,7 @@ def add_or_create(dictionary: {}, filename: tuple, amount: int):
 
 cur_dir = ""
 dir_dict = {"/": 0}
-with open("day_7.txt", "r") as inputs:
+with open("input/day_7.txt", "r") as inputs:
     for line in inputs:
         if "$ cd .." in line:
             cur_dir = cur_dir[:cur_dir.rfind("/")]
@@ -35,3 +39,28 @@ required_space = 30000000
 used_space = dir_dict["/"]
 min_size = required_space - (total_disk_space - used_space)
 print(min(size for size in dir_dict.values() if size >= min_size))
+
+'''
+lines = map(str.split, open('day_7.txt').read().splitlines())
+path, dirs = [], defaultdict(int)
+
+for l in lines:
+    if l[0] == "$":
+        if l[1] == "cd":
+            if l[2] == "..":
+                path.pop()
+            else:
+                path.append(l[2])
+    elif l[0] != "dir":
+        for i in range(len(path)):
+            dirs[tuple(path[: i + 1])] += int(l[0])
+
+print(sum(size for size in dirs.values() if size <= 100000))
+
+required = 30000000 - (70000000 - dirs[("/",)])
+
+print(min(size for size in dirs.values() if size >= required))
+print(f"correct {len(dirs)} mine {len(dir_dict)}")
+print(dirs)
+print(dir_dict["/"])
+'''

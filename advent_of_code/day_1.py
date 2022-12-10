@@ -1,6 +1,6 @@
 highest = [0, 0, 0]
 current = 0
-with open("day_1.txt", "r") as calories:
+with open("input/day_1.txt", "r") as calories:
     for calorie in calories:
         if calorie != "\n":
             current += int(calorie.strip())

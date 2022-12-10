@@ -11,7 +11,7 @@ def common_member(a, b, c=None):
 symbols = "0abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 totals = [0, 0]
 
-with open("day_3.txt", "r") as rucksacks:
+with open("input/day_3.txt", "r") as rucksacks:
     while rucksacks:
         lines = [line.strip() for line in [rucksacks.readline() for _ in range(3)] if len(line)]
         if len(lines) == 3:

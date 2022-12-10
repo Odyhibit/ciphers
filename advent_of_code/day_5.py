@@ -10,7 +10,7 @@ def visualize_stacks(stack_list: []):
 
 
 stacks = [[] for i in range(9)]
-with open("day_5.txt", "r") as manifest:
+with open("input/day_5.txt", "r") as manifest:
     while change := manifest.readline().strip("\n"):
         change += " "
         if len(change) > 3:

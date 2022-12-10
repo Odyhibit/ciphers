@@ -1,5 +1,5 @@
 def count_score(win, draw, lose, score, part):
-    with open("day_2_input.txt", "r") as games:
+    with open("input/day_2_input.txt", "r") as games:
         while game := games.readline().strip():
             if game in win:
                 score += 6
