@@ -1,9 +1,19 @@
 import string
 
 
+def main():
+    plain_text = 127
+    key = 198
+    base = 5
+
+    math_functions = [difference, analytical, no_carry_addition]
+    for func in math_functions:
+        test(plain_text, key, base, func, plain_text, key, base)
+
+
 def get_digit_lists(p: int, q: int, number_base: int) -> ():
     """Returns a list for each number with the least significant digit first. In the number_base chosen.
-    The smaller number is padded with zeros. The returned lists have the same length"""
+    The smaller number is padded with zeros. The returned lists have the SAME LENGTH"""
     p_list = []
     q_list = []
     while p > 0 or q > 0:
@@ -27,7 +37,7 @@ def get_digits_single(p: int, number_base: int):
 
 
 def to_base(p: int, number_base: int) -> str:
-    symbols = string.digits + string.ascii_uppercase
+    symbols = string.digits + string.ascii_uppercase   # add more symbols here for number base > 36
     p_list = get_digits_single(p, number_base)[::-1]
     return "".join(symbols[i] for i in p_list)
 
@@ -49,10 +59,10 @@ def difference(p: int, q: int, number_base: int) -> int:
 
 
 def analytical(p: int, q: int, number_base: int) -> int:
-    return (p + q) - (2 * p * q) % number_base
+    return ((p + q) - (2 * p * q)) % number_base
 
 
-def test(p: int, q: int, number_base: int, math_function: string):
+def test(p: int, q: int, number_base: int, math_function: string, plain_text, key, base):
     print()
     print(math_function.__name__)
     print(f"Base:{number_base}  plaintext:{to_base(p, number_base)}  key:{to_base(q, number_base)}")
@@ -67,12 +77,5 @@ def test(p: int, q: int, number_base: int, math_function: string):
             print()
 
 
-plain_text = 127
-key = 118
-base = 8
-p_base = to_base(plain_text, base)
-q_base = to_base(plain_text, base)
-
-math_functions = [no_carry_addition, difference, analytical]
-for func in math_functions:
-    test(plain_text, key, base, func)
+if __name__ == "__main__":
+    main()
