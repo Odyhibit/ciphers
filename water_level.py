@@ -42,7 +42,10 @@ def visualize_water(wall: [int]):
 
 
 def main():
-    walls = [[2, 1, 2], [3, 0, 1, 3, 0, 5], [3, 0, 1, 3, 0, 5, 0, 8, 0, 5]]
+    walls = [[2, 1, 2],
+             [3, 0, 1, 3, 0, 5],
+             [3, 0, 1, 3, 0, 5, 0, 8, 0, 5],
+             [3, 0, 0, 0, 0, 1, 2, 3, 4, 0, 4, 3, 2, 1, 3]]
     for wall in walls:
         visualize_water(wall)
 

@@ -4,7 +4,7 @@ import string
 def main():
     plain_text = 127
     key = 198
-    base = 5
+    base = 2
 
     math_functions = [difference, analytical, no_carry_addition]
     for func in math_functions:
@@ -67,10 +67,10 @@ def test(p: int, q: int, number_base: int, math_function: string, plain_text, ke
     print(math_function.__name__)
     print(f"Base:{number_base}  plaintext:{to_base(p, number_base)}  key:{to_base(q, number_base)}")
     temp = math_xor(plain_text, key, base, math_function)
-    print("1 time  ", to_base(temp, number_base))
+    print(f"1 time  {to_base(temp, number_base): >8}")
     for i in range(number_base - 1):
         temp = math_xor(temp, key, base, math_function)
-        print(i + 2, "times ", to_base(temp, number_base), end="")
+        print(f"{i + 2} times {to_base(temp, number_base): >8}", end="")
         if temp == plain_text:
             print("  \tmatch")
         else:
