@@ -18,7 +18,7 @@ def rainbow_by_index(index: int) -> str:
 
 def encode(cipher_in: str, rails: int):
     cipher = cipher_in.replace(" ", "_")
-    rail_fence = [[] for x in range(rails)]
+    rail_fence = [[] for _ in range(rails)]
     period: int = 2 * (rails - 1)
     for index, character in enumerate(cipher):
         active_row = index % period
@@ -38,7 +38,7 @@ def decode(cipher_str, rails):
     cipher = list(cipher_str.replace(" ", "_"))
     period: int = 2 * (rails - 1)
     index = 0
-    rail_fence = [[] for x in range(rails)]
+    rail_fence = [[] for _ in range(rails)]
     for row in range(rails):
         for i in range(len(cipher)):
             if i % period == row:
@@ -65,7 +65,7 @@ def visual_to_text(fence):
         for row in range(len(fence)):
             print(rainbow_by_index(row), end="")
             if fence[row][col] != " ":
-                print(fence[row][col].replace("_", " "), end="")
+                print(fence[row][col], end="")
     print(reset_color())
 
 
@@ -75,7 +75,7 @@ def visual_to_cipher(fence):
         print(rainbow_by_index(row), end="")
         for col in range(len(fence[row])):
             if fence[row][col] != " " and fence[row][col] is not None:
-                print(fence[row][col].replace("_", " "), end="")
+                print(fence[row][col], end="")
     print(reset_color())
 
 
@@ -93,7 +93,7 @@ def brute_force_decode(cipher_string: str, start: int, end: int):
 
 print()
 print()
-encode("This sentence is an example text that is just being used for testing", 3)
+encode("This sentence is an example text that is just being used for testing", 6)
 print()
 print()
 decode("Tnex g hec xetsjn rtitenat iuiuoesn am t sesfsg ei pehttbe tnssla di", 6)

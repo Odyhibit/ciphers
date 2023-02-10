@@ -4,9 +4,9 @@ import string
 def main():
     plain_text = 127
     key = 198
-    base = 2
+    base = 10
 
-    math_functions = [difference, analytical, no_carry_addition]
+    math_functions = [difference, analytical, no_carry_addition, square_of_difference]
     for func in math_functions:
         test(plain_text, key, base, func, plain_text, key, base)
 
@@ -37,7 +37,7 @@ def get_digits_single(p: int, number_base: int):
 
 
 def to_base(p: int, number_base: int) -> str:
-    symbols = string.digits + string.ascii_uppercase   # add more symbols here for number base > 36
+    symbols = string.digits + string.ascii_uppercase  # add more symbols here for number base > 36
     p_list = get_digits_single(p, number_base)[::-1]
     return "".join(symbols[i] for i in p_list)
 
@@ -52,6 +52,10 @@ def math_xor(p: int, q: int, number_base: int, math_operator) -> int:
 
 def no_carry_addition(p: int, q: int, number_base: int) -> int:
     return (p + q) % number_base
+
+
+def square_of_difference(p: int, q: int, number_base: int) -> int:
+    return ((p - q) ** 2) % number_base
 
 
 def difference(p: int, q: int, number_base: int) -> int:
