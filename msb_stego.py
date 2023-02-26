@@ -13,12 +13,13 @@ def Encode(src, message, dest, password):
     img = Image.open(src, 'r')
     width, height = img.size
     array = np.array(list(img.getdata()))
-
+    print("Image mode is", img.mode)
     if img.mode == 'RGB':
         n = 3
     elif img.mode == 'RGBA':
         n = 4
-
+    elif img.mode == "L":
+        n = 1
     total_pixels = array.size // n
 
     message += password

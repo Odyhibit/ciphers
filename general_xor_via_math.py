@@ -4,12 +4,12 @@ import string
 def main():
     plain_text = 139
     key = 127
-    base = 5
+    base = 64
 
     math_functions = [difference, analytical, no_carry_addition, square_of_difference]
     for func in math_functions:
         test_1(func, plain_text, key, base)
-    test_analytical(4)
+    test_analytical(base)
 
 
 def get_digits(p: int, number_base: int) -> [int]:
@@ -24,7 +24,7 @@ def get_digits(p: int, number_base: int) -> [int]:
 
 def to_base(p: int, number_base: int) -> str:
     """Returns a string version of a number in a specific base. Used for displaying number"""
-    symbols = string.digits + string.ascii_uppercase  # add more symbols here for number base > 36
+    symbols = string.digits + string.ascii_uppercase + string.ascii_lowercase + "*@"  # add more symbols here (64)
     p_list = get_digits(p, number_base)[::-1]
     return "".join(symbols[i] for i in p_list)
 
