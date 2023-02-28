@@ -51,12 +51,5 @@ def unstego():
         print(hex(unhide_byte(data[0:8])), hex(unhide_byte(data[8:16])))
         output.write(raw_bytes)
 
-
-test_byte = [0b10000000, 0b01000000, 0b10000000, 0b00010000, 0b10000000, 0b01000000, 0b10000000, 0b00000000]
-print(unhide_byte(test_byte))
-print(test_byte)
-print(test_byte[0:8])
-print(hide_bit(0xff, 0))
-print(hide_bit(0xff, 1))
 stego()
 unstego()
