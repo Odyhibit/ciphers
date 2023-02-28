@@ -1,114 +1,62 @@
-# import libraries
-import sys
-import numpy as np
 from PIL import Image
 
-np.set_printoptions(threshold=sys.maxsize)
 
-# encoding function
-password = ""
+def hide_bit(original: int, bit: int) -> int:
+    striped = original & 0b01111111
+    hidden_bit = bit << 7
+    return striped + hidden_bit
 
+def stego():
+    with Image.open("worn_sm.png") as img, open("final_exam.png", "rb") as hidden:
+        px = img.load()
+        b_message = ""
+        while hex_of_byte := hidden.read(1).hex():
+            if hex_of_byte:
+                b_message += bin(int(hex_of_byte, 16))[2:].zfill(8)
 
-def Encode(src, message, dest, password):
-    img = Image.open(src, 'r')
-    width, height = img.size
-    array = np.array(list(img.getdata()))
-    print("Image mode is", img.mode)
-    if img.mode == 'RGB':
-        n = 3
-    elif img.mode == 'RGBA':
-        n = 4
-    elif img.mode == "L":
-        n = 1
-    total_pixels = array.size // n
+        print("STEGO")
+        print(b_message[0:64])
+        width, height = img.width, img.height
 
-    message += password
-    b_message = ''.join([format(ord(i), "08b") for i in message])
-    req_pixels = len(b_message)
-
-    if req_pixels > (total_pixels * 3):
-        print("ERROR: Need larger file size")
-
-    else:
-        index = 0
-        for p in range(total_pixels):
-            for q in range(0, 3):
-                if index < req_pixels:
-                    array[p][q] = int(bin(array[p][q])[2:9] + b_message[index], 2)
-                    index += 1
-
-        array = array.reshape(height, width, n)
-        enc_img = Image.fromarray(array.astype('uint8'), img.mode)
-        enc_img.save(dest)
-        print("Image Encoded Successfully")
+        for y in range(height):
+            for x in range(width):
+                if len(b_message) > 0:
+                    bit_to_hide = b_message[0:1]
+                    image_byte = px[x, y]
+                    px[x, y] = hide_bit(image_byte, int(bit_to_hide))
+                    b_message = b_message[1:]
+        img.save("test.png")
 
 
-# decoding function
-def Decode(src, password):
-    img = Image.open(src, 'r')
-    array = np.array(list(img.getdata()))
-
-    if img.mode == 'RGB':
-        n = 3
-    elif img.mode == 'RGBA':
-        n = 4
-
-    total_pixels = array.size // n
-
-    hidden_bits = ""
-    for p in range(total_pixels):
-        for q in range(0, 3):
-            hidden_bits += (bin(array[p][q])[2:][-1])
-
-    hidden_bits = [hidden_bits[i:i + 8] for i in range(0, len(hidden_bits), 8)]
-
-    message = ""
-    hiddenmessage = ""
-    for i in range(len(hidden_bits)):
-        x = len(password)
-        if message[-x:] == password:
-            break
-        else:
-            message += chr(int(hidden_bits[i], 2))
-            message = f'{message}'
-            hiddenmessage = message
-    # verifying the password
-    if password in message:
-        print("Hidden Message:", hiddenmessage[:-x])
-    else:
-        print("You entered the wrong password: Please Try Again")
+def unhide_byte(eight_bytes: [int]) -> int:
+    byte_string = ""
+    for byte in eight_bytes:
+        high_bit = byte & 0b10000000
+        bit = high_bit >> 7
+        byte_string += str(bit)
+    return int(byte_string,2)
 
 
-# main function
-def Stego():
-    print("--Welcome to $t3g0--")
-    print("1: Encode")
-    print("2: Decode")
-
-    func = input()
-
-    if func == '1':
-        print("Enter Source Image Path")
-        src = input()
-        print("Enter Message to Hide")
-        message = input()
-        print("Enter Destination Image Path")
-        dest = input()
-        print("Enter password")
-        password = input()
-        print("Encoding...")
-        Encode(src, message, dest, password)
-
-    elif func == '2':
-        print("Enter Source Image Path")
-        src = input()
-        print("Enter Password")
-        password = input()
-        print("Decoding...")
-        Decode(src, password)
-
-    else:
-        print("ERROR: Invalid option chosen")
+def unstego():
+    with Image.open("test.png") as img, open("output.png", "wb") as output:
+        raw_bytes = bytearray()
+        px = img.load()
+        width, height = img.width, img.height
+        data = []
+        for y in range(height):
+            for x in range(width):
+                data.append(px[x, y])
+        for i in range(0, len(data), 8):
+            raw_bytes.append(unhide_byte(data[i:i+8]))
+        print(hex(unhide_byte(data[0:8])), hex(unhide_byte(data[8:16])))
+        output.write(raw_bytes)
 
 
-Stego()
+test_byte = [0b10000000, 0b01000000, 0b10000000, 0b00010000, 0b10000000, 0b01000000, 0b10000000, 0b00000000]
+print(unhide_byte(test_byte))
+print(test_byte)
+print(test_byte[0:8])
+print(hide_bit(0xff, 0))
+print(hide_bit(0xff, 1))
+stego()
+unstego()
