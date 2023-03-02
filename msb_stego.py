@@ -38,7 +38,7 @@ def unhide_byte(eight_bytes: [int]) -> int:
 
 
 def unstego():
-    with Image.open("test.png") as img, open("output.png", "wb") as output:
+    with Image.open("test2.png") as img, open("output.png", "wb") as output:
         raw_bytes = bytearray()
         px = img.load()
         width, height = img.width, img.height
