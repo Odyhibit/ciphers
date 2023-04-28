@@ -4,12 +4,13 @@ import string
 def main():
     plain_text = 139
     key = 127
-    base = 64
+    base = 16
 
     math_functions = [difference, analytical, no_carry_addition, square_of_difference]
     for func in math_functions:
         test_1(func, plain_text, key, base)
     test_analytical(base)
+    test_no_carry_addition(base)
 
 
 def get_digits(p: int, number_base: int) -> [int]:
@@ -57,7 +58,7 @@ def difference(p: int, q: int, number_base: int) -> int:
 
 
 def analytical(p: int, q: int, number_base: int) -> int:
-    return ((p + q) - (2 * p * q)) % number_base
+    return ((p + q) - (number_base * p * q)) % number_base
 
 
 def fill_zero_to(lst: [int], num: int) -> [int]:
@@ -102,20 +103,37 @@ def add_create(dictionary, key, value=1):
     else:
         dictionary[key] += value
 
+
 def test_analytical(base):
     print("Analytical test:")
-    print("Testing numbers 0-127 x 0-127, should get 16384")
+    print("Testing numbers 0-127 x 0-127, total possibilities = 16384")
     match_at = {}
     for p in range(128):
         for q in range(128):
             temp = math_xor(p, q, base, analytical)
-            for i in range(base-1):
+            for i in range(base - 1):
                 temp = math_xor(temp, q, base, analytical)
                 if temp == p:
                     add_create(match_at, i)
                     continue
     for num in match_at:
         print(num + 2, "iterations", match_at[num])
+
+def test_no_carry_addition(base):
+    print("No carry addition test:")
+    print("Testing numbers 0-127 x 0-127, total possibilities = 16384")
+    match_at = {}
+    for p in range(128):
+        for q in range(128):
+            temp = math_xor(p, q, base, no_carry_addition)
+            for i in range(base - 1):
+                temp = math_xor(temp, q, base, no_carry_addition)
+                if temp == p:
+                    add_create(match_at, i)
+                    continue
+    for num in match_at:
+        print(num + 2, "iterations", match_at[num])
+
 
 if __name__ == "__main__":
     main()

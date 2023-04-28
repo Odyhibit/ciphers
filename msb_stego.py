@@ -34,7 +34,7 @@ def unhide_byte(eight_bytes: [int]) -> int:
         high_bit = byte & 0b10000000
         bit = high_bit >> 7
         byte_string += str(bit)
-    return int(byte_string,2)
+    return int(byte_string, 2)
 
 
 def unstego():
