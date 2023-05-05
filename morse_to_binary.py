@@ -2,7 +2,10 @@ binary_representation = {".": "10", "-": "1110", "_": "1110", " ": "00", "/": "0
 morse_example = "-- --- .-. ... . / -.-. --- -.. . / .. ... / -- .- -.. . / ..- .--. / --- ..-. / -.. --- - ... / -.. " \
                 ".- ... .... . ... --..-- / .- -. -.. / --. .- .--. ... .-.-.- "
 
-
+'''
+Use Cyber chef to replace stuff like this
+https://gchq.github.io/CyberChef/#recipe=Find_/_Replace(%7B'option':'Regex','string':'1110'%7D,'-',true,false,true,false)Find_/_Replace(%7B'option':'Simple%20string','string':'10'%7D,'.',true,false,true,false)Find_/_Replace(%7B'option':'Regex','string':'00000000'%7D,'/',true,false,true,false)Find_/_Replace(%7B'option':'Regex','string':'00'%7D,'%20',true,false,true,false)From_Morse_Code('Space','Forward%20slash')&input=MTExMDExMTAwMDExMTAxMTEwMTExMDAwMTAxMTEwMTAwMDEwMTAxMDAwMTAwMDAwMDAwMDExMTAxMDExMTAxMDAwMTExMDExMTAxMTEwMDAxMTEwMTAxMDAwMTAwMDAwMDAwMDEwMTAwMDEwMTAxMDAwMDAwMDAwMTExMDExMTAwMDEwMTExMDAwMTExMDEwMTAwMDEwMDAwMDAwMDAxMDEwMTExMDAwMTAxMTEwMTExMDEwMDAwMDAwMDAxMTEwMTExMDExMTAwMDEwMTAxMTEwMTAwMDAwMDAwMDExMTAxMDEwMDAxMTEwMTExMDExMTAwMDExMTAwMDEwMTAxMDAwMDAwMDAwMTExMDEwMTAwMDEwMTExMDAwMTAxMDEwMDAxMDEwMTAxMDAwMTAwMDEwMTAxMDAwMTExMDExMTAxMDEwMTExMDExMTAwMDAwMDAwMDEwMTExMDAwMTExMDEwMDAxMTEwMTAxMDAwMDAwMDAwMTExMDExMTAxMDAwMTAxMTEwMDAxMDExMTAxMTEwMTAwMDEwMTAxMDAwMTAxMTEwMTAxMTEwMTAxMTEwMDAwMDAwMDAK
+'''
 def morse_str_to_bin_str(morse_str: str) -> str:
     binary_str = ""
     for char in morse_example:
@@ -17,7 +20,6 @@ def bin_str_to_bytearray(binary_str: str) -> []:
         start = byte_index
         byte_array.append(int(binary_str[start: start + 8], 2))
     return byte_array
-
 
 
 bin_str = morse_str_to_bin_str(morse_example)
