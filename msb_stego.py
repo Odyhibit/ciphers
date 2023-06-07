@@ -7,7 +7,7 @@ def hide_bit(original: int, bit: int) -> int:
     return striped + hidden_bit
 
 def stego():
-    with Image.open("worn_sm.png") as img, open("final_exam.png", "rb") as hidden:
+    with Image.open("test_rgb.png") as img, open("morse_bin_output", "rb") as hidden:
         px = img.load()
         b_message = ""
         while hex_of_byte := hidden.read(1).hex():
@@ -23,7 +23,12 @@ def stego():
                 if len(b_message) > 0:
                     bit_to_hide = b_message[0:1]
                     image_byte = px[x, y]
-                    px[x, y] = hide_bit(image_byte, int(bit_to_hide))
+                    #print("image byete",  image_byte)
+                    red_byte = image_byte[0]
+                    #print(red_byte)
+                    new_rede_byte = hide_bit(red_byte, int(bit_to_hide))
+                    new_tuple = (new_rede_byte, image_byte[1], image_byte[2])
+                    px[x,y] = new_tuple
                     b_message = b_message[1:]
         img.save("test.png")
 
@@ -52,4 +57,4 @@ def unstego():
         output.write(raw_bytes)
 
 stego()
-unstego()
+#  unstego()
