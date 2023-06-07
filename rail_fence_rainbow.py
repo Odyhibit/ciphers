@@ -5,14 +5,17 @@ def reset_color() -> str:
 
 def rainbow_by_index(index: int) -> str:
     red = "\u001b[31m"
+    orange = "\u001b[38:5:208m"
+    yellow = "\u001b[38:5:227m"
     green = "\u001b[32m"
-    yellow = "\u001b[33m"
     blue = "\u001b[34m"
+    indigo = "\u001b[38:5:93m"
+    violet = "\u001b[38:5:54m"
     magenta = "\u001b[35m"
     cyan = "\u001b[36m"
     white = "\u001b[37m"
 
-    rainbow = [red, green, yellow, blue, magenta, cyan, white]
+    rainbow = [red, orange, yellow, green,  blue, indigo, violet]
     return rainbow[index % 7]
 
 
