@@ -47,7 +47,7 @@ def list_to_string(character_list: list) -> str:
 
 def display_rainbow_rails(fence: []):
     for i, rail in enumerate(fence):
-        print(rainbow[i], list_to_string(rail), reset)
+        print(rainbow[i % 8], list_to_string(rail), reset)
 
 
 def display_rainbow_plaintext(fence: []):
@@ -62,29 +62,46 @@ def display_rainbow_plaintext(fence: []):
     print(reset)
 
 
-cipher = "Tnex g hec xetsjn rtitenat iuiuoesn am t sesfsg ei pehttbe tnssla di"
+def display_rainbow_cipher(fence: []):
+    print(" ", end="")
+    for row in range(len(fence)):
+        print(rainbow[row], end="")
+        for col in range(len(fence[row])):
+            if fence[row][col] != " " and fence[row][col] is not None:
+                print(fence[row][col], end="")
+    print(reset)
+
+
+def brute_force(cipher: str, wordlist: []):
+    highest_word_count = 0
+    row_candidate = 0
+    offset_candidate = 0
+    print(f"Trying row values 2-{len(cipher) // 2 + 4}")
+    print(f"Using all possible offsets")
+    for key in range(2, len(cipher) // 2 + 4):
+        period = 2 * (key - 1)
+        for offset in range(period):
+            word_count = 0
+            candidate, rails = decode(cipher, key)
+            for word in wordlist:
+                if word in candidate:
+                    word_count += 1
+            if word_count > highest_word_count:
+                highest_word_count = word_count
+                row_candidate = key
+                offset_candidate = offset
+    return row_candidate, offset_candidate
+
+
+cipher_text = "Tnex g hec xetsjn rtitenat iuiuoesn am t sesfsg ei pehttbe tnssla di"
 common_word_list = load_word_list("common_words_min_3_letters.txt")
-highest_word_count = 0
-row_candidate = 0
-offset_candidate = 0
 
-for key in range(2, len(cipher) // 2 + 4):
-    period = 2 * (key - 1)
-    for offset in range(period):
-        word_count = 0
-        candidate, rails = decode(cipher, key)
-        for word in common_word_list:
-            if word in candidate:
-                word_count += 1
-        if word_count > highest_word_count:
-            highest_word_count = word_count
-            row_candidate = key
-            offset_candidate = offset
-        #  print(f"if there are {i} rows the word count is {word_count}")
+row, offset = brute_force(cipher_text, common_word_list)
+print()
+print(f"Row count is most likely {green}{row}{reset} with offset {green}{offset}{reset}")
+print()
+plaintext, rails = decode(cipher_text, row, offset)
 
-print(f"Looks like the row count is most likely {row_candidate} with offset {offset_candidate}")
-plaintext, rails = decode(cipher, row_candidate, offset_candidate)
-
+display_rainbow_cipher(rails)
 display_rainbow_rails(rails)
 display_rainbow_plaintext(rails)
-
