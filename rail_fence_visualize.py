@@ -108,3 +108,7 @@ print()
 print("Brute force # of rails from 3-7")
 print()
 brute_force_decode("F daS-eefn  n KZ3eheadty.YI8lta oiwy-Q0. r aI2", 3, 7)
+
+print()
+print()
+decode("5e 48 57 63 68 6e 5e 47 63 5e 68 67 67 69 67 67 47 68 5e 47 68 57 26 a6 94 26 95 67 55 26 45 e7 56 f6 a6 a6 94 83 24 23 96 e6 34 47 24 36 15 96 16 23 54 a6 55 87 94 67 24 56 a6 a6 94 83 24 c7 a6 d3 59 5f 43 49 43 67 59 65 40 48 6a 77 57 46 4f 72 46 57 59 71 65 3d", 3)
